@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Blog Writer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background: #4b7bec;
+      color: white;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    main {
+      margin-top: 30px;
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #4b7bec;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #3867d6;
+    }
+    #output {
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧠 AI Blog Writer</h1>
+  </header>
+
+  <main>
+    <h3>Enter your blog topic 👇</h3>
+    <textarea id="topic" placeholder="e.g. Benefits of AI in Education"></textarea>
+    <button onclick="generateBlog()">Generate Blog</button>
+
+    <div id="output"></div>
+  </main>
+
+  <script>
+    async function generateBlog() {
+      const topic = document.getElementById('topic').value;
+      const output = document.getElementById('output');
+      if (!topic.trim()) {
+        output.innerHTML = "⚠ Please enter a topic first!";
+        return;
+      }
+
+      output.innerHTML = "⏳ Generating blog content...";
+      
+      // Simple demo AI (you can replace this with real API later)
+      setTimeout(() => {
+        output.innerHTML = `<h3>Blog Title: ${topic}</h3>
+        <p>${topic} is an exciting subject in today's world of innovation. Artificial Intelligence helps writers create smarter, faster, and more creative content. With AI-powered tools, you can save time, improve SEO, and focus more on ideas than on typing!</p>`;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
