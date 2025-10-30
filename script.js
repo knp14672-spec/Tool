@@ -38,3 +38,5 @@ btn.addEventListener("click", async () => {
   }
 }};
 });
+const apiKey = 
+process.env.HUGGINGFACE_API_KEY;
