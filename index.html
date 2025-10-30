@@ -1,97 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Blog Writer</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f7;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header {
-      background: #4b7bec;
-      color: white;
-      width: 100%;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    main {
-      margin-top: 30px;
-      width: 90%;
-      max-width: 600px;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      resize: none;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #4b7bec;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #3867d6;
-    }
-    #output {
-      margin-top: 20px;
-      background: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      min-height: 100px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Resume Builder - Real</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f0f2f5;color:#333;margin:0;padding:0;}
+header{background:#7c3aed;color:white;padding:20px;text-align:center;}
+main{display:flex;flex-wrap:wrap;gap:20px;padding:20px;max-width:1000px;margin:auto;}
+section, aside{background:white;padding:20px;border-radius:10px;flex:1;min-width:300px;}
+input, textarea, select{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px;}
+button{padding:10px 16px;background:#7c3aed;color:white;border:none;border-radius:6px;cursor:pointer;}
+button:disabled{background:#ccc;cursor:default;}
+#resumePreview{border:1px solid #ddd;padding:10px;margin-top:10px;border-radius:6px;background:#fafafa;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>🧠 AI Blog Writer</h1>
-  </header>
-
-  <main>
-    <h3>Enter your blog topic 👇</h3>
-    <textarea id="topic" placeholder="e.g. Benefits of AI in Education"></textarea>
-    <button onclick="generateBlog()">Generate Blog</button>
-
-    <div id="output"></div>
-  </main>
-
-  <script>
-    async function generateBlog() {
-      const topic = document.getElementById('topic').value;
-      const output = document.getElementById('output');
-      if (!topic.trim()) {
-        output.innerHTML = "⚠ Please enter a topic first!";
-        return;
-      }
-
-      output.innerHTML = "⏳ Generating blog content...";
-      
-      // Simple demo AI (you can replace this with real API later)
-      setTimeout(() => {
-        output.innerHTML = `<h3>Blog Title: ${topic}</h3>
-        <p>${topic} is an exciting subject in today's world of innovation. Artificial Intelligence helps writers create smarter, faster, and more creative content. With AI-powered tools, you can save time, improve SEO, and focus more on ideas than on typing!</p>`;
-      }, 2000);
-    }
-  </script>
+<header>
+<h1>AI Resume Builder</h1>
+<p>Fill details and generate AI-enhanced Resume</p>
+</header>
+<main>
+<section>
+<h2>Enter Your Details</h2>
+<label>Full Name</label>
+<input id="fullname" placeholder="e.g. Aarti Patel">
+<label>Job Title</label>
+<input id="title" placeholder="e.g. Frontend Developer">
+<label>Location</label>
+<input id="location" placeholder="City, Country">
+<label>Contact / Links</label>
+<input id="contact" placeholder="Email, Phone, LinkedIn">
+<label>Work Experience (line by line)</label>
+<textarea id="work" placeholder="Role | Company | Years | Bullets separated by ;"></textarea>
+<label>Education (line by line)</label>
+<textarea id="education" placeholder="Degree | Institute | Year"></textarea>
+<label>Skills (comma separated)</label>
+<input id="skills" placeholder="HTML, CSS, JavaScript">
+<button id="generateBtn">Generate Resume with AI</button>
+</section>
+<aside>
+<h2>Preview</h2>
+<div id="resumePreview">Your AI-generated resume will appear here.</div>
+</aside>
+</main>
+<script>
+const btn=document.getElementById('generateBtn');
+const preview=document.getElementById('resumePreview');
+btn.addEventListener('click',async()=>{
+btn.disabled=true;
+btn.textContent='Generating...';
+const data={
+fullname:document.getElementById('fullname').value,
+title:document.getElementById('title').value,
+location:document.getElementById('location').value,
+contact:document.getElementById('contact').value,
+work:document.getElementById('work').value,
+education:document.getElementById('education').value,
+skills:document.getElementById('skills').value
+};
+try{
+const res=await fetch('http://localhost:3000/generate-resume',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+const json=await res.json();
+preview.innerHTML=json.resume;
+}catch(err){
+preview.innerHTML='Error generating resume: '+err.message;
+}
+btn.disabled=false;
+btn.textContent='Generate Resume with AI';
+});
+</script>
 </body>
+</html>
 </html>
